@@ -1,8 +1,8 @@
-package com.gornostaevas.pushify
+package com.gornostaevas.pushify.authorized_list
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import org.jetbrains.annotations.TestOnly
+import com.gornostaevas.pushify.R
 
 /**
  * Contains all specific data that is used by authentication APIs of various social networks.

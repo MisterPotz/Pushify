@@ -2,6 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.3.71'
+
     repositories {
         google()
         jcenter()
@@ -11,6 +12,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.6.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+        def navVersion = "2.3.0-alpha04"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${navVersion}"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -53,15 +56,15 @@ ext.libraries = [
         "constraintLayout"      : 'androidx.constraintlayout:constraintlayout:1.1.3',
 
         // using the power of nav fragments
-        "navigationFragment"    : ["androidx.navigation:navigation-fragment:$navVersion",
-                                   "androidx.navigation:navigation-fragment-ktx:$navVersion"],
+        "navigationFragment"    : ["androidx.navigation:navigation-fragment:${ext.navVersion}",
+                                   "androidx.navigation:navigation-fragment-ktx:${ext.navVersion}"],
         // easy navigation
-        "navigationUI"          : ["androidx.navigation:navigation-ui:$navVersion",
-                                   "androidx.navigation:navigation-ui-ktx:$navVersion"],
+        "navigationUI"          : ["androidx.navigation:navigation-ui:${ext.navVersion}",
+                                   "androidx.navigation:navigation-ui-ktx:${ext.navVersion}"],
 
         // Some more navigation dependencies
         "navigationExtra"       : [  // Dynamic Feature Module Support
-                                     "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"],
+                                     "androidx.navigation:navigation-dynamic-features-fragment:${ext.navVersion}"],
 
         // view models and live data
         "lifecycle"             : ['androidx.lifecycle:lifecycle-extensions:2.2.0',
@@ -96,6 +99,9 @@ ext.libraries = [
         // For parsing things easily
         "gson"                  : 'com.google.code.gson:gson:2.8.6',
 
+        // To use gson for deserealizing retrofit requests
+        "gsonRetrofitFactory"   : "Gson: com.squareup.retrofit2:converter-gson:2.8.1",
+
         // Network framework
         "retrofit"              : "com.squareup.retrofit2:retrofit:2.8.1",
 
@@ -107,5 +113,7 @@ ext.libraries = [
         "daggerJava"            : "com.google.dagger:dagger:${ext.daggerVersion}",
 
         // For mocking classes in unit tests
-        "mockk"                 : "io.mockk:mockk:1.9"
+        "mockk"                 : "io.mockk:mockk:1.9",
+
+        "vkSdk"                 : "com.vk:androidsdk:2.2.1"
 ]

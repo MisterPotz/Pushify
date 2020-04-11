@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Pushify</string>
     <string name="push_new_post">Push new post</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_netwok">Add netwok</string>
+
+    <string name="selectNetwork">Select network</string>
+    <string-array name="available_nets">
+        <item>VK</item>
+        <item>Facebook</item>
+    </string-array>
 </resources>

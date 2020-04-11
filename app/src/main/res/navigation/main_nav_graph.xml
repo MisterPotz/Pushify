@@ -8,7 +8,52 @@
 
     <fragment
         android:id="@+id/mainHome"
-        android:name="com.gornostaevas.pushify.AuthorizedListFragment"
+        android:name="com.gornostaevas.pushify.authorized_list.AuthorizedListFragment"
         android:label="activity_home_content"
-        tools:layout="@layout/authorized_list_fragment" />
+        tools:layout="@layout/authorized_list_fragment">
+        <action
+            android:id="@+id/action_mainHome_to_authorizeFragment"
+            app:destination="@id/authorizeFragment"
+            app:launchSingleTop="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/authorizeFragment"
+        android:name="com.gornostaevas.pushify.new_authorization.AuthorizeFragment"
+        android:label="fragment_authorize"
+        tools:layout="@layout/fragment_authorize">
+        <argument
+            android:name="info"
+            android:defaultValue="@null"
+            app:argType="com.gornostaevas.pushify.new_authorization.AuthorizationInfo"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_authorizeFragment_to_navigation"
+            app:destination="@id/authorizationActivity">
+            <argument
+                android:name="activity_info"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <activity
+        android:id="@+id/authorizationActivity"
+        android:name="com.gornostaevas.pushify.new_authorization.AuthorizationActivity"
+        android:label="activity_authorization"
+        tools:layout="@layout/activity_authorization">
+        <argument
+            android:name="activity_info"
+            app:argType="integer" />
+    </activity>
+
+    <action
+        android:id="@+id/action_global_authorizeFragment"
+        app:destination="@id/authorizeFragment"
+        app:popUpTo="@id/authorizeFragment"
+        app:popUpToInclusive="true" >
+        <argument
+            android:name="info"
+            android:defaultValue="@null"
+            app:argType="com.gornostaevas.pushify.new_authorization.AuthorizationInfo"
+            app:nullable="true" />
+    </action>
 </navigation>

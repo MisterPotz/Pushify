@@ -1,4 +1,4 @@
-package com.gornostaevas.pushify
+package com.gornostaevas.pushify.social_nets
 
 /**
  * Registers all current supported frameworks

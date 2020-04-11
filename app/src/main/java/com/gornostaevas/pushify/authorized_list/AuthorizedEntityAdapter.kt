@@ -1,6 +1,5 @@
-package com.gornostaevas.pushify
+package com.gornostaevas.pushify.authorized_list
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.gornostaevas.pushify.R
 
 /**
  * Responsible for visualizing list of authorized items
@@ -40,7 +40,9 @@ class AuthorizedEntityAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthorizedEntityHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_social_net, parent, false)
-        return AuthorizedEntityHolder(view)
+        return AuthorizedEntityHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int {

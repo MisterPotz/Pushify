@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/authorize_navigation"
+    app:startDestination="@id/authorizationLast">
+
+    <action
+        android:id="@+id/action_global_authorizeFragment"
+        app:destination="@id/authorizeFragment"
+        app:popUpTo="@id/authorizeFragment"
+        app:popUpToInclusive="true" >
+        <argument
+            android:name="info"
+            android:defaultValue="@null"
+            app:argType="com.gornostaevas.pushify.new_authorization.AuthorizationInfo"
+            app:nullable="true" />
+    </action>
+
+    <include app:graph="@navigation/main_nav_graph" />
+
+    <fragment
+        android:id="@+id/authorizationLast"
+        android:name="com.gornostaevas.pushify.new_authorization.AuthorizationLast"
+        android:label="fragment_authorization_last"
+        tools:layout="@layout/fragment_authorization_last" />
+</navigation>
