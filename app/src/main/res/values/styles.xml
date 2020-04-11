@@ -1,11 +1,33 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/colorTextOnPrimary</item>
+        <item name="colorOnPrimarySurface">@color/colorTextOnPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+<!--        <item name="colorOnPrimary">@color/colorOnPrimary</item>-->
+<!--        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>-->
+        <item name="colorSecondary">@color/colorAccent</item>
+<!--        <item name="colorSecondaryVariant">@color/colorSecondaryLight</item>-->
+        <item name="colorError">#F74A3C</item>
+<!--        <item name="colorOnPrimarySurface">@color/colorOnPrimary</item>-->
+<!--        <item name="colorOnBackground">@color/colorOnSecondary</item>-->
+<!--        <item name="editTextBackground">@color/editTextBackground</item>-->
+<!--        <item name="colorOnSurface">@color/colorSecondaryText</item>-->
+<!--        <item name="android:textColorPrimary">@color/colorSecondaryText</item>-->
+<!--        <item name="colorOnSecondary">@color/colorOnPrimary</item>-->
+
+        <!-- necessary options for setting a customized toolbar -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <item name="popupMenuStyle">@style/Widget.MaterialComponents.PopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.MaterialComponents.PopupMenu.Overflow</item>
+    </style>
+
+    <style name="ActionBar" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="titleTextAppearance">@style/TextAppearance.MaterialComponents.Headline1</item>
     </style>
 
 </resources>

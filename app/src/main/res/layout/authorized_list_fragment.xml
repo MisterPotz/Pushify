@@ -4,29 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:padding="1dp">
 
     <include
-        layout="@layout/apptoolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/apptoolbar"
-        app:layout_constraintVertical_chainStyle="packed"/>
-
-    <fragment
-        android:id="@+id/mainNavHost"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
+        layout="@layout/authenticated_social_nets"
         android:layout_height="0dp"
-        app:defaultNavHost="true"
+        android:layout_width="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/apptoolbar"
-        app:navGraph="@navigation/main_nav_graph" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/push_new_post"
+        android:layout_margin="@dimen/material_margin_standard"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
