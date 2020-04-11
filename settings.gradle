@@ -1,0 +1,2 @@
+rootProject.name='Pushify'
+include ':app'
