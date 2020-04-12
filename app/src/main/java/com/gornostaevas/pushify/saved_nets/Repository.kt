@@ -9,48 +9,48 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class Repository @Inject constructor(val database: AppDatabase) {
+class Repository @Inject constructor(private val database: AppDatabase) {
     val scope = CoroutineScope(Dispatchers.IO)
 
     private val mutableLiveData: MutableLiveData<List<SavedAuthorization>> = MutableLiveData()
 
-    private val liveData : LiveData<List<SavedAuthorization>> = Transformations.switchMap(mutableLiveData) {
-        MutableLiveData(it)
+    fun getAll(): LiveData<List<SavedAuthorization>> {
+        updateData()
+        return mutableLiveData
     }
 
-    fun getAll(): LiveData<List<SavedAuthorization>> {
+    private fun updateData() {
         scope.launch {
             val list = database.userDao().getAll()
             this@Repository.mutableLiveData.setOnMain(list)
         }
-        return liveData
     }
 
     fun insert(item: SavedAuthorization) {
         scope.launch {
             database.userDao().insertAll(listOf(item))
-            getAll()
+            updateData()
         }
     }
 
     fun insert(list: List<SavedAuthorization>) {
         scope.launch {
             database.userDao().insertAll(list)
-            getAll()
+            updateData()
         }
     }
 
     fun delete(list: List<SavedAuthorization>) {
         scope.launch {
             database.userDao().delete(list)
-            getAll()
+            updateData()
         }
     }
 
     fun delete(item: SavedAuthorization) {
         scope.launch {
             database.userDao().delete(listOf(item))
-            getAll()
+            updateData()
         }
     }
 }

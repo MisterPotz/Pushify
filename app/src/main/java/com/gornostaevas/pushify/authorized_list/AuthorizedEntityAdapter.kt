@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.gornostaevas.pushify.R
+import timber.log.Timber
 
 /**
  * Responsible for visualizing list of authorized items
@@ -18,15 +19,14 @@ class AuthorizedEntityAdapter(
     context: Context,
     lifecycleOwner: LifecycleOwner,
     val list: LiveData<List<AuthorizedEntity>>
-) :
-    RecyclerView.Adapter<AuthorizedEntityAdapter.AuthorizedEntityHolder>() {
+) : RecyclerView.Adapter<AuthorizedEntityAdapter.AuthorizedEntityHolder>() {
 
-    val drawablesList: LiveData<List<Drawable>> = Transformations.switchMap(list) {
-        MutableLiveData(it.map { context.getDrawable(it.getImage())!! })
-    }
+    var drawablesList: List<Drawable> = listOf()
 
     init {
         list.observe(lifecycleOwner, Observer {
+            Timber.i("in init of observation")
+            drawablesList = it.map { context.getDrawable(it.getImage())!! }
             notifyDataSetChanged()
         })
     }
@@ -52,10 +52,13 @@ class AuthorizedEntityAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.value!!.size
+        return list.value?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: AuthorizedEntityHolder, position: Int) {
-        holder.bindTo(list.value!![position], drawablesList.value!![position])
+        val somre = drawablesList
+        val somre2 = list.value
+        Timber.i("Count in recycler: drawables - $somre, list - $somre2")
+        holder.bindTo(list.value!![position], drawablesList!![position])
     }
 }
