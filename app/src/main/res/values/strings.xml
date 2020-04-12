@@ -7,6 +7,9 @@
     <string name="add_netwok">Add netwok</string>
 
     <string name="selectNetwork">Select network</string>
+    <string name="send_post">Send post</string>
+    <string name="post_title">Post title</string>
+    <string name="content">Content</string>
     <string-array name="available_nets">
         <item>VK</item>
         <item>Facebook</item>

@@ -13,22 +13,23 @@ import timber.log.Timber
  * With using DI this interface wont be that bad.
  */
 interface ResultObserver {
-    fun obtainResultFromLaunched(requestCode: Int, resultCode: Int, data: Intent?) : Boolean
+    fun obtainResultFromLaunched(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
-    fun registerCallback(callback : (ActivityResultEvent) -> Boolean)
+    fun registerCallback(callback: (ActivityResultEvent) -> Boolean)
 }
 
-data class ActivityResultEvent(val requestCode: Int,
-                          val resultCode: Int,
-                          val data: Intent?)
+data class ActivityResultEvent(
+    val requestCode: Int,
+    val resultCode: Int,
+    val data: Intent?
+)
 
 class ResultObserverImpl : ResultObserver {
     /**
      *  Clients can add their callbacks on multiple hierarchies. If no client's callback returns
      *  true - activity will use its super methods
      */
-    private val callbacks : MutableList<(ActivityResultEvent) -> Boolean> = mutableListOf()
-
+    private val callbacks: MutableList<(ActivityResultEvent) -> Boolean> = mutableListOf()
 
     override fun obtainResultFromLaunched(
         requestCode: Int,
@@ -36,15 +37,22 @@ class ResultObserverImpl : ResultObserver {
         data: Intent?
     ): Boolean {
         val resultEvent = ActivityResultEvent(requestCode, resultCode, data)
-        val successful = callbacks.map {it(resultEvent) }.filter { it }
+        val successful = callbacks.map { it(resultEvent) }.filter { it }
+
+        cleanCallbacks()
+
         if (successful.size > 1) {
             Timber.w("Multiple successful executions among callbacks")
             return true
         }
-        if (successful.isEmpty()){
+        if (successful.isEmpty()) {
             return false
         }
         return true
+    }
+
+    private fun cleanCallbacks() {
+        callbacks.removeAll { true }
     }
 
     override fun registerCallback(callback: (ActivityResultEvent) -> Boolean) {

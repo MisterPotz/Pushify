@@ -3,12 +3,9 @@ package com.gornostaevas.pushify.di
 import com.gornostaevas.pushify.MainActivity
 import com.gornostaevas.pushify.authorized_list.AuthorizedListFragment
 import com.gornostaevas.pushify.network.NetworkModule
-import com.gornostaevas.pushify.new_authorization.AuthorizationManager
 import com.gornostaevas.pushify.new_authorization.AuthorizeFragment
-import com.gornostaevas.pushify.social_nets.SupportedNetworks
+import com.gornostaevas.pushify.send_post.SendPostFragment
 import dagger.Component
-import dagger.Module
-import javax.inject.Provider
 
 @ApplicationScope
 @Component(modules = [NetworkModule::class, ModelModule::class])
@@ -19,4 +16,6 @@ interface ApplicationComponent {
     fun inject(fragment : AuthorizedListFragment)
 
     fun inject(fragment : AuthorizeFragment)
+
+    fun inject(fragment: SendPostFragment)
 }

@@ -24,5 +24,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/push_new_post"
+        android:id="@+id/pushNewPost"
         android:layout_margin="@dimen/material_margin_standard"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

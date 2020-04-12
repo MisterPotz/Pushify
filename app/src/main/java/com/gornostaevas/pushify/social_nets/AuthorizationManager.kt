@@ -1,8 +1,10 @@
-package com.gornostaevas.pushify.new_authorization
+package com.gornostaevas.pushify.social_nets
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gornostaevas.pushify.ResultObserver
+import com.gornostaevas.pushify.authorized_list.AuthorizedEntity
 
 /**
  * Is able to launch new activities (or fragments within nested graph isolated
@@ -16,7 +18,7 @@ interface AuthorizationManager {
      * [resultsObserver] - authorization manager serves as the end-point delegate of activity
      * that it launches.
      */
-    fun startAuthentication(activity: Activity, resultsObserver: ResultObserver) : LiveData<AccessData>
+    fun startAuthentication(context: Context, activity: Activity, resultsObserver: ResultObserver) : LiveData<AuthorizedEntity>
 }
 
 /**

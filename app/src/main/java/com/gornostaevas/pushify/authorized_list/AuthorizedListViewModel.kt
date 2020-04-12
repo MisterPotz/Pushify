@@ -8,6 +8,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.gornostaevas.pushify.R
 import com.gornostaevas.pushify.di.ApplicationScope
+import com.gornostaevas.pushify.social_nets.AuthorizedClient
+import com.gornostaevas.pushify.social_nets.PostData
+import com.gornostaevas.pushify.social_nets.PostStatus
 import javax.inject.Inject
 
 /**
@@ -19,19 +22,7 @@ class AuthorizedListViewModel @Inject constructor(private val context: Context) 
 
     // this info is saved
     private val allAuthorizedMutable: MutableLiveData<List<AuthorizedEntity>> by lazy {
-        MutableLiveData(
-            List(20) {
-                if (it % 2 == 0) {
-                    object : AuthorizedEntity(context) {}
-                } else {
-                    object : AuthorizedEntity(context) {
-                        override fun getImage(): Drawable {
-                            return context.getDrawable(R.drawable.ic_facebook)!!
-                        }
-                    }
-                }
-            }
-        )
+        MutableLiveData<List<AuthorizedEntity>>(mutableListOf())
     }
 
     val allAuthorized: LiveData<List<AuthorizedEntity>>
@@ -42,6 +33,13 @@ class AuthorizedListViewModel @Inject constructor(private val context: Context) 
     fun addNewEntity(entity: AuthorizedEntity) {
         allAuthorizedMutable.value = allAuthorizedMutable.value!!.toMutableList().apply {
             add(entity)
+        }
+    }
+
+    fun sendPostToAll(postData: PostData) : List<LiveData<PostStatus>> {
+        return allAuthorizedMutable.value!!.map {
+            it.getClient().sendPost(postData)
+                // Здесь отдать список лайв дат, из которых будет строиться результат
         }
     }
 }

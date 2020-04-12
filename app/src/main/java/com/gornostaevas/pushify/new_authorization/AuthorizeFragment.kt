@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gornostaevas.pushify.MyApplication
 import com.gornostaevas.pushify.R
 import com.gornostaevas.pushify.ResultObserver
+import com.gornostaevas.pushify.android_utils.setupToolbar
 import com.gornostaevas.pushify.authorized_list.AuthorizedListViewModel
 import com.gornostaevas.pushify.di.SocialNetworkComponent
 import com.gornostaevas.pushify.di.SocialNetworkModule
@@ -29,7 +29,8 @@ class AuthorizeFragment : Fragment() {
     @Inject
     lateinit var resultObtainer: ResultObserver
 
-    @Inject lateinit var socialManagerBuilder : Provider<SocialNetworkComponent.Builder>
+    @Inject
+    lateinit var socialManagerBuilder: Provider<SocialNetworkComponent.Builder>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,32 +51,36 @@ class AuthorizeFragment : Fragment() {
         (activity!!.application as MyApplication).appComponent.inject(this)
 
         availableNetworks.adapter = NetworkListAdapter(context!!)
-        /*       ArrayAdapter()(
-                   this,
-                   R.array.planets_array,
-                   android.R.layout.simple_spinner_item
-               ).also { adapter ->
-                   // Specify the layout to use when the list of choices appears
-                   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                   // Apply the adapter to the spinner
-                   spinner.adapter = adapter
-               } */
     }
 
     override fun onStart() {
         super.onStart()
-        (activity!! as AppCompatActivity).supportActionBar!!.setTitle(R.string.selectNetwork)
-        (activity!! as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        // TODO get authorizationmanager via dagger - via network
-
+        setupToolbar(R.string.selectNetwork, true)
         authorize.setOnClickListener {
-            val manager = socialManagerBuilder.get().socialNetworkModule(SocialNetworkModule(SupportedNetworks.VK)).build().getAuthManager()
+            val manager = socialManagerBuilder.get()
+                .socialNetworkModule(SocialNetworkModule(availableNetworks.selectedItem as SupportedNetworks))
+                .build()
+                .getAuthManager()
+            val liveData = manager.startAuthentication(context!!, activity!!, resultObtainer)
+            Timber.i("Live data has observers: ${liveData.hasActiveObservers()}")
 
-            manager.startAuthentication(activity!!, resultObtainer).observe(viewLifecycleOwner, Observer {
+            liveData.observe(viewLifecycleOwner, Observer {
                 Timber.i("Got the data")
+
+                viewModel.addNewEntity(it)
             })
+
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,9 +4,9 @@ import android.content.Context
 import com.gornostaevas.pushify.ResultObserver
 import com.gornostaevas.pushify.ResultObserverImpl
 import com.gornostaevas.pushify.authorized_list.AuthorizedListViewModel
-import com.gornostaevas.pushify.new_authorization.AuthorizationManager
+import com.gornostaevas.pushify.social_nets.AuthorizationManager
 import com.gornostaevas.pushify.social_nets.SupportedNetworks
-import com.gornostaevas.pushify.social_nets.VKManager
+import com.gornostaevas.pushify.social_nets.vk.VKManager
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent

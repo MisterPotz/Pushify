@@ -15,6 +15,14 @@
             android:id="@+id/action_mainHome_to_authorizeFragment"
             app:destination="@id/authorizeFragment"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_mainHome_to_sendPostFragment"
+            app:destination="@id/sendPostFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/authorizeFragment"
@@ -56,4 +64,9 @@
             app:argType="com.gornostaevas.pushify.new_authorization.AuthorizationInfo"
             app:nullable="true" />
     </action>
+    <fragment
+        android:id="@+id/sendPostFragment"
+        android:name="com.gornostaevas.pushify.send_post.SendPostFragment"
+        android:label="fragment_send_post"
+        tools:layout="@layout/fragment_send_post" />
 </navigation>

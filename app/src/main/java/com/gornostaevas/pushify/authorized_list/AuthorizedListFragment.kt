@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gornostaevas.pushify.MyApplication
 import com.gornostaevas.pushify.R
 import kotlinx.android.synthetic.main.authenticated_social_nets.*
+import kotlinx.android.synthetic.main.authorized_list_fragment.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,8 +19,6 @@ class AuthorizedListFragment : Fragment() {
         fun newInstance() =
             AuthorizedListFragment()
     }
-
-
 
     @Inject
     lateinit var viewModel: AuthorizedListViewModel
@@ -55,6 +52,9 @@ class AuthorizedListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         restoreActionBar()
+        pushNewPost.setOnClickListener {
+            findNavController().navigate(AuthorizedListFragmentDirections.actionMainHomeToSendPostFragment())
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
