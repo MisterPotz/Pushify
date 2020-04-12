@@ -1,13 +1,13 @@
 package com.gornostaevas.pushify.authorized_list
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.gornostaevas.pushify.R
 
@@ -15,9 +15,15 @@ import com.gornostaevas.pushify.R
  * Responsible for visualizing list of authorized items
  */
 class AuthorizedEntityAdapter(
+    context: Context,
     lifecycleOwner: LifecycleOwner,
-    val list: LiveData<List<AuthorizedEntity>>) :
+    val list: LiveData<List<AuthorizedEntity>>
+) :
     RecyclerView.Adapter<AuthorizedEntityAdapter.AuthorizedEntityHolder>() {
+
+    val drawablesList: LiveData<List<Drawable>> = Transformations.switchMap(list) {
+        MutableLiveData(it.map { context.getDrawable(it.getImage())!! })
+    }
 
     init {
         list.observe(lifecycleOwner, Observer {
@@ -30,8 +36,8 @@ class AuthorizedEntityAdapter(
         val title = itemView.findViewById<TextView>(R.id.itemTitle)
         val info = itemView.findViewById<TextView>(R.id.itemInfo)
 
-        fun bindTo(entity : AuthorizedEntity) {
-            image.setImageDrawable(entity.getImage())
+        fun bindTo(entity: AuthorizedEntity, drawable: Drawable) {
+            image.setImageDrawable(drawable)
             title.text = entity.getTitle()
             info.text = entity.getInfo()
         }
@@ -50,6 +56,6 @@ class AuthorizedEntityAdapter(
     }
 
     override fun onBindViewHolder(holder: AuthorizedEntityHolder, position: Int) {
-        holder.bindTo(list.value!![position])
+        holder.bindTo(list.value!![position], drawablesList.value!![position])
     }
 }

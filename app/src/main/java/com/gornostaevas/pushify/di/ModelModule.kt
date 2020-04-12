@@ -1,11 +1,16 @@
 package com.gornostaevas.pushify.di
 
 import android.content.Context
+import androidx.room.Room
 import com.gornostaevas.pushify.ResultObserver
 import com.gornostaevas.pushify.ResultObserverImpl
 import com.gornostaevas.pushify.authorized_list.AuthorizedListViewModel
+import com.gornostaevas.pushify.saved_nets.AppDatabase
+import com.gornostaevas.pushify.saved_nets.Repository
+import com.gornostaevas.pushify.saved_nets.SocNetDao
 import com.gornostaevas.pushify.social_nets.AuthorizationManager
 import com.gornostaevas.pushify.social_nets.SupportedNetworks
+import com.gornostaevas.pushify.social_nets.facebook.FacebookManager
 import com.gornostaevas.pushify.social_nets.vk.VKManager
 import dagger.Module
 import dagger.Provides
@@ -20,12 +25,22 @@ class ModelModule(val context: Context) {
 
     @Provides
     @ApplicationScope
-    fun viewModel(): AuthorizedListViewModel = AuthorizedListViewModel(context)
+    fun viewModel(repository: Repository): AuthorizedListViewModel =
+        AuthorizedListViewModel(repository)
 
     @Provides
     @ApplicationScope
     fun resObserver(): ResultObserver {
         return ResultObserverImpl()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun database(): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java, "soc_database"
+        ).build()
     }
 }
 
@@ -36,6 +51,7 @@ class SocialNetworkModule(val net: SupportedNetworks) {
     fun getAuthenticationManager(): AuthorizationManager {
         return when (net) {
             SupportedNetworks.VK -> VKManager()
+            SupportedNetworks.Facebook -> FacebookManager()
             else -> throw IllegalStateException("dont have other networks realized")
         }
     }

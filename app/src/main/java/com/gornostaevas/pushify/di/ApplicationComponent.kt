@@ -4,6 +4,7 @@ import com.gornostaevas.pushify.MainActivity
 import com.gornostaevas.pushify.authorized_list.AuthorizedListFragment
 import com.gornostaevas.pushify.network.NetworkModule
 import com.gornostaevas.pushify.new_authorization.AuthorizeFragment
+import com.gornostaevas.pushify.saved_nets.Repository
 import com.gornostaevas.pushify.send_post.SendPostFragment
 import dagger.Component
 
@@ -18,4 +19,6 @@ interface ApplicationComponent {
     fun inject(fragment : AuthorizeFragment)
 
     fun inject(fragment: SendPostFragment)
+
+    fun repository() : Repository
 }

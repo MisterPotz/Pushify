@@ -17,6 +17,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/authorize"
+        android:layout_margin="@dimen/material_margin_standard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="1dp"
+        android:text="Authorize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/availableNetworks"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <FrameLayout
         android:id="@+id/networkSpecificContainer"
         android:layout_width="wrap_content"
@@ -26,11 +39,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/authorize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Authorize"
-            android:layout_gravity="center"/>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

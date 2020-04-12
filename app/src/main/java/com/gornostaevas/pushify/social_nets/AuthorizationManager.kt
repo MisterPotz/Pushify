@@ -2,6 +2,7 @@ package com.gornostaevas.pushify.social_nets
 
 import android.app.Activity
 import android.content.Context
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.gornostaevas.pushify.ResultObserver
 import com.gornostaevas.pushify.authorized_list.AuthorizedEntity
@@ -18,7 +19,10 @@ interface AuthorizationManager {
      * [resultsObserver] - authorization manager serves as the end-point delegate of activity
      * that it launches.
      */
-    fun startAuthentication(context: Context, activity: Activity, resultsObserver: ResultObserver) : LiveData<AuthorizedEntity>
+    // TODO сделать возвращение не готовой AuthorizedEntity, а обертку со статусом
+    fun startAuthentication(context: Context, activity: Activity, resultsObserver: ResultObserver) : LiveData<AuthorizedEntity?>
+
+    fun getSpecificFragment() : Fragment?
 }
 
 /**

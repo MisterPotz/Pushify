@@ -1,14 +1,13 @@
 package com.gornostaevas.pushify.authorized_list
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.gornostaevas.pushify.R
 import com.gornostaevas.pushify.di.ApplicationScope
-import com.gornostaevas.pushify.social_nets.AuthorizedClient
+import com.gornostaevas.pushify.saved_nets.Repository
+import com.gornostaevas.pushify.social_nets.AuthorizationCreator
 import com.gornostaevas.pushify.social_nets.PostData
 import com.gornostaevas.pushify.social_nets.PostStatus
 import javax.inject.Inject
@@ -17,12 +16,16 @@ import javax.inject.Inject
  * Context is necessary to obtain resources from device storage
  */
 @ApplicationScope
-class AuthorizedListViewModel @Inject constructor(private val context: Context) : ViewModel() {
+class AuthorizedListViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     // TODO viewModel must get this values used for authorization and visuals FROM repository where
 
     // this info is saved
-    private val allAuthorizedMutable: MutableLiveData<List<AuthorizedEntity>> by lazy {
-        MutableLiveData<List<AuthorizedEntity>>(mutableListOf())
+    private val allAuthorizedMutable: LiveData<List<AuthorizedEntity>> by lazy {
+        Transformations.map(repository.getAll()) {
+            it.map {
+                AuthorizationCreator.createAuthorizationInfo(it)
+            }
+        }
     }
 
     val allAuthorized: LiveData<List<AuthorizedEntity>>
@@ -31,9 +34,7 @@ class AuthorizedListViewModel @Inject constructor(private val context: Context) 
         }
 
     fun addNewEntity(entity: AuthorizedEntity) {
-        allAuthorizedMutable.value = allAuthorizedMutable.value!!.toMutableList().apply {
-            add(entity)
-        }
+        repository.insert(entity.savedAuthorization)
     }
 
     fun sendPostToAll(postData: PostData) : List<LiveData<PostStatus>> {

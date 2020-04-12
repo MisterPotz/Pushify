@@ -1,8 +1,7 @@
 package com.gornostaevas.pushify.authorized_list
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import com.gornostaevas.pushify.R
+import androidx.annotation.DrawableRes
+import com.gornostaevas.pushify.saved_nets.SavedAuthorization
 import com.gornostaevas.pushify.social_nets.AuthorizedClient
 
 /**
@@ -12,12 +11,13 @@ import com.gornostaevas.pushify.social_nets.AuthorizedClient
  *
  * But methods that MUST be implemented are for visual information
  */
-abstract class AuthorizedEntity constructor(val context: Context) {
-    open fun getTitle() : String = "Some title"
+abstract class AuthorizedEntity constructor(val savedAuthorization: SavedAuthorization) {
+    open fun getTitle() : String = savedAuthorization.title
 
-    open fun getInfo() : String = "Some info"
+    open fun getInfo() : String = savedAuthorization.adiitional
 
-    open fun getImage() : Drawable = context.getDrawable(R.drawable.ic_vk)!!
+    @DrawableRes
+    open fun getImage() : Int = savedAuthorization.drawable
 
     // Sometimes connection can go off - in that case, we can understand if this entity requires some inner reloading
     fun isLoaded() : Boolean = true

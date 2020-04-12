@@ -44,6 +44,7 @@ class AuthorizedListFragment : Fragment() {
         authenticatedList.layoutManager = LinearLayoutManager(context)
         authenticatedList.adapter =
             AuthorizedEntityAdapter(
+                context!!,
                 viewLifecycleOwner,
                 viewModel.allAuthorized
             )

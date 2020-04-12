@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Timber.i("requestCode: $requestCode, resultCode: $resultCode")
-        if (!resultObtainer.obtainResultFromLaunched(requestCode, resultCode, data)) {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
+        resultObtainer.obtainResultFromLaunched(requestCode, resultCode, data)
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

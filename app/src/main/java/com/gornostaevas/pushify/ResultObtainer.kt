@@ -16,6 +16,8 @@ interface ResultObserver {
     fun obtainResultFromLaunched(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
     fun registerCallback(callback: (ActivityResultEvent) -> Boolean)
+
+    fun cleanCallbacks()
 }
 
 data class ActivityResultEvent(
@@ -51,7 +53,7 @@ class ResultObserverImpl : ResultObserver {
         return true
     }
 
-    private fun cleanCallbacks() {
+    override fun cleanCallbacks() {
         callbacks.removeAll { true }
     }
 

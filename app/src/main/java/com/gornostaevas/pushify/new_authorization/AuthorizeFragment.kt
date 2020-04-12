@@ -53,24 +53,49 @@ class AuthorizeFragment : Fragment() {
         availableNetworks.adapter = NetworkListAdapter(context!!)
     }
 
+    private var currentAttachedFragment: Fragment? = null
+
     override fun onStart() {
         super.onStart()
 
         setupToolbar(R.string.selectNetwork, true)
+
         authorize.setOnClickListener {
             val manager = socialManagerBuilder.get()
                 .socialNetworkModule(SocialNetworkModule(availableNetworks.selectedItem as SupportedNetworks))
                 .build()
                 .getAuthManager()
-            val liveData = manager.startAuthentication(context!!, activity!!, resultObtainer)
-            Timber.i("Live data has observers: ${liveData.hasActiveObservers()}")
 
-            liveData.observe(viewLifecycleOwner, Observer {
-                Timber.i("Got the data")
+            val fragment = manager.getSpecificFragment()
+            resultObtainer.cleanCallbacks()
 
-                viewModel.addNewEntity(it)
-            })
+            // TODO this logic is not so good
+            if (fragment == null) {
+                val liveData = manager.startAuthentication(context!!, activity!!, resultObtainer)
+                Timber.i("Live data has observers: ${liveData.hasActiveObservers()}")
 
+                currentAttachedFragment?.let {
+                    childFragmentManager.beginTransaction()
+                        .remove(it).commit()
+                }
+
+                liveData.observe(viewLifecycleOwner, Observer {
+                    Timber.i("Got the data")
+
+                    it?.let { viewModel.addNewEntity(it) }
+                })
+            } else {
+                manager.startAuthentication(context!!, activity!!, resultObtainer).observe(viewLifecycleOwner, Observer {
+                    Timber.i("Got the data")
+
+                    it?.let { viewModel.addNewEntity(it) }
+                })
+                childFragmentManager.beginTransaction()
+                    .add(R.id.networkSpecificContainer, fragment)
+                    .commit()
+                currentAttachedFragment = fragment
+                Timber.i("Waiting for specific fragment to login")
+            }
         }
     }
 
