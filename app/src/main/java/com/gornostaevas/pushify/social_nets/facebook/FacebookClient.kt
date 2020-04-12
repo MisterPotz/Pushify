@@ -12,7 +12,7 @@ class FacebookClient() : AuthorizedClient {
     /**
      * Currently facebook sending post is not yet fully supported due to developing serious time limits
      * BUT!
-     * The way that sdks are added to the app is isolated from other app
+     * The way that sdks are added to the app is simple. Just not experienced in FB
      */
     override fun sendPost(postData: PostData): LiveData<PostStatus> {
         val mutableLiveData = MutableLiveData(PostStatus(false, null))

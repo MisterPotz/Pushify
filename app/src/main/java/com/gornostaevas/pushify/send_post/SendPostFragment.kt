@@ -53,7 +53,11 @@ class SendPostFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> findNavController().popBackStack()
-            R.id.sendPost -> viewModel.sendPostToAll(getPostData()).let { true }
+            R.id.sendPost -> viewModel.sendPostToAll(getPostData()).let {
+                val action = SendPostFragmentDirections.actionSendPostFragmentToResultsFragment2()
+                findNavController().navigate(action)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

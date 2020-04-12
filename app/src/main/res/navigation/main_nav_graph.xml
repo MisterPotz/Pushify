@@ -18,9 +18,10 @@
         <action
             android:id="@+id/action_mainHome_to_sendPostFragment"
             app:destination="@id/sendPostFragment"
+            app:launchSingleTop="true"
+
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:launchSingleTop="true"
             app:popEnterAnim="@anim/nav_default_enter_anim"
             app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
@@ -34,24 +35,7 @@
             android:defaultValue="@null"
             app:argType="com.gornostaevas.pushify.new_authorization.AuthorizationInfo"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_authorizeFragment_to_navigation"
-            app:destination="@id/authorizationActivity">
-            <argument
-                android:name="activity_info"
-                app:argType="integer" />
-        </action>
     </fragment>
-
-    <activity
-        android:id="@+id/authorizationActivity"
-        android:name="com.gornostaevas.pushify.new_authorization.AuthorizationActivity"
-        android:label="activity_authorization"
-        tools:layout="@layout/activity_authorization">
-        <argument
-            android:name="activity_info"
-            app:argType="integer" />
-    </activity>
 
     <action
         android:id="@+id/action_global_authorizeFragment"
@@ -68,5 +52,19 @@
         android:id="@+id/sendPostFragment"
         android:name="com.gornostaevas.pushify.send_post.SendPostFragment"
         android:label="fragment_send_post"
-        tools:layout="@layout/fragment_send_post" />
+        tools:layout="@layout/fragment_send_post" >
+        <action
+            android:id="@+id/action_sendPostFragment_to_resultsFragment2"
+            app:destination="@id/resultsFragment"
+
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.gornostaevas.pushify.send_results.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" />
 </navigation>

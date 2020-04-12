@@ -17,5 +17,6 @@
 
     <string name="facebook_app_id">251847202660804</string>
     <string name="fb_login_protocol_scheme">fb251847202660804</string>
+    <string name="status">Status</string>
 
 </resources>
